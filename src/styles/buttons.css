@@ -1,0 +1,95 @@
+/* ========== BOTONES ========== */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background: var(--rosa);
+  color: var(--amarillo);
+  border: 2px solid var(--amarillo);
+}
+
+.btn-primary:hover {
+  background: var(--amarillo);
+  color: var(--rosa);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: var(--amarillo);
+  color: var(--negro);
+  border: 2px solid var(--negro);
+}
+
+.btn-secondary:hover {
+  background: var(--negro);
+  color: var(--amarillo);
+}
+
+.btn-danger {
+  background: var(--rojo);
+  color: var(--blanco);
+  border: 2px solid var(--blanco);
+}
+
+.btn-danger:hover {
+  background: var(--blanco);
+  color: var(--rojo);
+  border-color: var(--rojo);
+}
+
+.btn-success {
+  background: var(--verde);
+  color: var(--blanco);
+  border: 2px solid var(--blanco);
+}
+
+.btn-success:hover {
+  background: var(--blanco);
+  color: var(--verde);
+  border-color: var(--verde);
+}
+
+.btn-info {
+  background: var(--azul);
+  color: var(--blanco);
+  border: 2px solid var(--blanco);
+}
+
+.btn-info:hover {
+  background: var(--blanco);
+  color: var(--azul);
+  border-color: var(--azul);
+}
+
+.btn-warning {
+  background: var(--naranja);
+  color: var(--blanco);
+  border: 2px solid var(--blanco);
+}
+
+.btn-warning:hover {
+  background: var(--blanco);
+  color: var(--naranja);
+  border-color: var(--naranja);
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+  text-align: center;
+}

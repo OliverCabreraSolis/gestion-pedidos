@@ -1,0 +1,25 @@
+:root {
+  --rosa: #ff0099;
+  --amarillo: #ffeb00;
+  --negro: #000000;
+  --blanco: #ffffff;
+  --gris: #f5f5f5;
+  --verde: #28a745;
+  --azul: #17a2b8;
+  --rojo: #dc3545;
+  --naranja: #fd7e14;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--gris);
+  color: var(--negro);
+  line-height: 1.6;
+  min-height: 100vh;
+}

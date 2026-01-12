@@ -1,0 +1,17 @@
+import React from 'react';
+
+const ReportesPage = () => {
+  return (
+    <div className="reportes-container">
+      <h3 className="section-title">📊 Reportes & Impresión</h3>
+      
+      <div style={{ textAlign: 'center', padding: '40px 20px', color: '#666' }}>
+        <div style={{ fontSize: '48px', marginBottom: '15px' }}>📊</div>
+        <h4>Sistema de reportes en construcción</h4>
+        <p>Esta sección estará disponible pronto.</p>
+      </div>
+    </div>
+  );
+};
+
+export default ReportesPage;
