@@ -2,34 +2,27 @@ import { useState } from "react";
 import { useProveedores } from "../hooks/useProveedores";
 
 export default function ProveedoresPage() {
-  const {
-    proveedores,
-    agregarProveedor,
-    eliminarProveedor
-  } = useProveedores();
+  const { proveedores, agregarProveedor } = useProveedores();
 
   const [form, setForm] = useState({
     nombre: "",
-    contacto: "",
+    ruc: "",
     telefono: "",
-    correo: "",
-    categoria: ""
+    productos: ""
   });
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const guardar = async () => {
-    if (!form.nombre) return alert("Nombre requerido");
+    if (!form.nombre || !form.ruc) {
+      alert("Nombre y RUC son obligatorios");
+      return;
+    }
+
     await agregarProveedor(form);
-    setForm({
-      nombre: "",
-      contacto: "",
-      telefono: "",
-      correo: "",
-      categoria: ""
-    });
+    setForm({ nombre: "", ruc: "", telefono: "", productos: "" });
   };
 
   return (
@@ -37,40 +30,44 @@ export default function ProveedoresPage() {
       <h2>👥 Proveedores</h2>
 
       {/* FORM */}
-      <div className="form-container mb-20">
-        <div className="form-row">
-          <input className="form-input" name="nombre" placeholder="Proveedor" value={form.nombre} onChange={handleChange} />
-          <input className="form-input" name="categoria" placeholder="Categoría" value={form.categoria} onChange={handleChange} />
+      <div className="form-container mt-20">
+        <div className="form-group">
+          <label>Nombre del proveedor</label>
+          <input name="nombre" value={form.nombre} onChange={handleChange} />
         </div>
 
-        <div className="form-row">
-          <input className="form-input" name="contacto" placeholder="Contacto" value={form.contacto} onChange={handleChange} />
-          <input className="form-input" name="telefono" placeholder="Teléfono" value={form.telefono} onChange={handleChange} />
+        <div className="form-group">
+          <label>RUC</label>
+          <input name="ruc" value={form.ruc} onChange={handleChange} />
         </div>
 
-        <input className="form-input mt-20" name="correo" placeholder="Correo" value={form.correo} onChange={handleChange} />
+        <div className="form-group">
+          <label>Teléfono</label>
+          <input name="telefono" value={form.telefono} onChange={handleChange} />
+        </div>
 
-        <button className="btn btn-success mt-20" onClick={guardar}>
-          ➕ Registrar proveedor
+        <div className="form-group">
+          <label>Productos que vende</label>
+          <textarea
+            name="productos"
+            value={form.productos}
+            onChange={handleChange}
+          />
+        </div>
+
+        <button className="btn btn-success" onClick={guardar}>
+          💾 Guardar proveedor
         </button>
       </div>
 
       {/* LISTA */}
-      <div className="card-grid">
+      <div className="card-grid mt-20">
         {proveedores.map(p => (
           <div key={p.id} className="card">
             <strong>{p.nombre}</strong>
-            <p>📦 {p.categoria}</p>
-            <p>👤 {p.contacto}</p>
+            <p>RUC: {p.ruc}</p>
             <p>📞 {p.telefono}</p>
-            <p>✉️ {p.correo}</p>
-
-            <button
-              className="btn btn-danger btn-small mt-20"
-              onClick={() => eliminarProveedor(p.id)}
-            >
-              🗑️ Eliminar
-            </button>
+            <p>📦 {p.productos}</p>
           </div>
         ))}
       </div>
