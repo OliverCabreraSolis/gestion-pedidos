@@ -1,0 +1,33 @@
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .ticket,
+  .ticket * {
+    visibility: visible;
+  }
+
+  .ticket {
+    width: 80mm;
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+    font-size: 12px;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px dashed black;
+    margin: 6px 0;
+  }
+
+  ul {
+    padding-left: 12px;
+  }
+
+  .center {
+    text-align: center;
+    margin-top: 10px;
+  }
+}
