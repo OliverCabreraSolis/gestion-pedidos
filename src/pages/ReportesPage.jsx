@@ -1,61 +1,81 @@
-import { usePedidosUrgentes } from "../hooks/usePedidosUrgentes";
-import { useProveedores } from "../hooks/useProveedores";
+import { useApp } from "../context/AppContext";
+import { useState } from "react";
 
 export default function ReportesPage() {
-  const { listas } = usePedidosUrgentes();
-  const { proveedores } = useProveedores();
+  const { pedidos, obtenerProveedorPorId } = useApp();
+  const [tipo, setTipo] = useState("diario");
 
-  const imprimir = () => {
-    window.print();
+  const hoy = new Date();
+
+  const esMismoDia = (fecha) =>
+    new Date(fecha).toDateString() === hoy.toDateString();
+
+  const esMismaSemana = (fecha) => {
+    const f = new Date(fecha);
+    const inicioSemana = new Date(hoy);
+    inicioSemana.setDate(hoy.getDate() - hoy.getDay());
+    return f >= inicioSemana;
   };
+
+  const esMismoMes = (fecha) =>
+    new Date(fecha).getMonth() === hoy.getMonth();
+
+  const pedidosFiltrados = pedidos.filter(p => {
+    if (tipo === "diario") return esMismoDia(p.fecha);
+    if (tipo === "semanal") return esMismaSemana(p.fecha);
+    if (tipo === "mensual") return esMismoMes(p.fecha);
+    return false;
+  });
+
+  const imprimir = () => window.print();
 
   return (
     <div className="card">
-      <h2>📊 Reportes & Impresión</h2>
+      <h2>📊 Reportes</h2>
 
-      <div className="flex gap-10 mt-20">
-        <button className="btn btn-primary" onClick={imprimir}>
-          🖨 Imprimir reporte
+      {/* BOTONES */}
+      <div className="reportes-botones">
+        <button onClick={() => setTipo("diario")} className="btn btn-primary">
+          📅 Diario
+        </button>
+        <button onClick={() => setTipo("semanal")} className="btn btn-secondary">
+          📆 Semanal
+        </button>
+        <button onClick={() => setTipo("mensual")} className="btn btn-info">
+          🗓 Mensual
+        </button>
+        <button onClick={imprimir} className="btn btn-success">
+          🖨 Imprimir
         </button>
       </div>
 
       {/* ZONA IMPRIMIBLE */}
-      <div className="ticket">
-        <h3>EXA - Gestión de Pedidos</h3>
-        <p>Reporte generado</p>
-        <hr />
+      <div className="reporte-ticket">
+        <h3 className="center">EXA – REPORTE {tipo.toUpperCase()}</h3>
+        <p className="center">{hoy.toLocaleDateString()}</p>
 
-        {/* PEDIDOS URGENTES */}
-        <h4>🧮 Pedidos urgentes</h4>
-        {listas.map(lista => (
-          <div key={lista.id} className="ticket-section">
-            <strong>📅 {lista.fecha}</strong>
-            <p>{lista.tipo}</p>
-            <ul>
-              {lista.productos.map((p, i) => (
-                <li key={i}>
-                  {p.nombre} — {p.stock}
-                </li>
-              ))}
-            </ul>
-            {lista.comentario && <p>📝 {lista.comentario}</p>}
-            <hr />
+        <div className="reporte-lista">
+          <div className="reporte-header">
+            <span>Proveedor</span>
+            <span>Importe</span>
           </div>
-        ))}
 
-        {/* PROVEEDORES */}
-        <h4>👥 Proveedores</h4>
-        {proveedores.map(p => (
-          <div key={p.id} className="ticket-section">
-            <strong>{p.nombre}</strong>
-            <p>RUC: {p.ruc}</p>
-            <p>📞 {p.telefono}</p>
-            <p>📦 {p.productos}</p>
-            <hr />
-          </div>
-        ))}
+          {pedidosFiltrados.map(p => {
+            const prov = obtenerProveedorPorId(p.proveedorId);
+            return (
+              <div key={p.id} className="reporte-row">
+                <span>{prov?.nombre || "Proveedor"}</span>
+                <span>S/ {Number(p.montoEstimado).toFixed(2)}</span>
+              </div>
+            );
+          })}
+        </div>
 
-        <p className="center">Gracias por su preferencia</p>
+        {/* FIRMA */}
+        <div className="firma">
+          <p>__________________________</p>
+          <p>Encargado</p>
+        </div>
       </div>
     </div>
   );
