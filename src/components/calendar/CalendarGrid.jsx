@@ -3,7 +3,7 @@ import CalendarDay from './CalendarDay';
 
 const CalendarGrid = ({ mesActual, añoActual, toggleExpandDay, obtenerPedidosDia }) => {
   const hoy = new Date();
-  const hoyStr = hoy.toISOString().split('T')[0];
+  const fechaStr = `${añoActual}-${String(mesActual + 1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
   
   const primerDia = new Date(añoActual, mesActual, 1);
   const ultimoDia = new Date(añoActual, mesActual + 1, 0);

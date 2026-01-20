@@ -9,6 +9,7 @@ import CedisPage from './pages/CedisPage';
 import ReportesPage from './pages/ReportesPage';
 import { useApp } from './context/AppContext';
 import './styles/app.css';
+import './styles/print.css';
 
 const AppContent = () => {
   const { seccionActual } = useApp();

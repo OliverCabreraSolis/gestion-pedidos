@@ -1,9 +1,10 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
 
-const DayExpanded = ({ fechaStr, pedidosDia, onClose, onCrearPedido }) => {
+const DayExpanded = ({ fechaStr, pedidosDia, onClose, onCrearPedido, onCambiarEstado }) => {
   const { obtenerProveedorPorId } = useApp();
-  const fecha = new Date(fechaStr);
+  const [y, m, d] = fechaStr.split('-');
+  const fecha = new Date(y, m - 1, d);
   
   const getEstadoBadge = (estado) => {
     switch(estado) {
@@ -49,7 +50,7 @@ const DayExpanded = ({ fechaStr, pedidosDia, onClose, onCrearPedido }) => {
           <button className="btn btn-primary btn-small" onClick={onCrearPedido}>
             ➕ Agregar
           </button>
-          <button className="btn btn-success btn-small" onClick={() => console.log('Imprimir:', fechaStr)}>
+          <button className="btn btn-success btn-small" onClick={() => window.print()}>
             🖨️ Imprimir
           </button>
           <button className="btn btn-secondary btn-small" onClick={onClose}>
@@ -85,15 +86,15 @@ const DayExpanded = ({ fechaStr, pedidosDia, onClose, onCrearPedido }) => {
                 
                 <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
                   {pedido.estado === 'pendiente' ? (
-                    <button className="btn btn-primary btn-small" onClick={() => console.log('Marcar como llegado:', pedido.id)}>
+                    <button className="btn btn-primary btn-small" onClick={() => onCambiarEstado( pedido.id, 'llego')}>
                       ✅ Llegó
                     </button>
                   ) : pedido.estado === 'llego' ? (
                     <>
-                      <button className="btn btn-primary btn-small" onClick={() => console.log('Registrar pago:', pedido.id)}>
+                      <button className="btn btn-primary btn-small" onClick={() => onCambiarEstado(pedido.id, 'registrado')}>
                         💰 Registrar
                       </button>
-                      <button className="btn btn-secondary btn-small" onClick={() => console.log('Marcar como no llegó:', pedido.id)}>
+                      <button className="btn btn-secondary btn-small" onClick={() => onCambiarEstado(pedido.id, 'pendiente')}>
                         ❌ No Llegó
                       </button>
                     </>
