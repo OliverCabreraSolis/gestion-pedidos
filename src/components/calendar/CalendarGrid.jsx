@@ -31,7 +31,7 @@ const CalendarGrid = ({ mesActual, añoActual, toggleExpandDay, obtenerPedidosDi
         fechaStr={fechaStr}
         pedidosDia={pedidosDia}
         esHoy={fechaStr === hoyStr}
-        onClick={() => toggleExpandDay(fechaStr, dia)}
+        onClick={() => toggleExpandDay(fechaStr)}
       />
     );
   }
