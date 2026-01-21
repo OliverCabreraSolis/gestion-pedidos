@@ -64,10 +64,7 @@ export default function CalendarPage() {
           fechaStr={diaExpandido}
           pedidosDia={obtenerPedidosDia(diaExpandido)}
           onClose={() => setDiaExpandido(null)}
-          onCrearPedido={() => {
-            setFechaSeleccionada(diaExpandido);
-            setSeccionActual('nuevo-pedido');
-          }}
+            onCrearPedido={crearPedido}
           onCambiarEstado={cambiarEstadoPedido}
         />
       )}

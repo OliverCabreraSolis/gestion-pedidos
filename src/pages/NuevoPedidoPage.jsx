@@ -4,7 +4,7 @@ import { useProveedores } from "../hooks/useProveedores";
 import { useApp } from "../context/AppContext";
 
 export default function NuevoPedidoPage() {
-  const { fechaSeleccionada } = useApp();
+  const { fechaSeleccionada, cambiarSeccion } = useApp();
   const { proveedores } = useProveedores();
   const { agregarPedido } = usePedidos();
 
@@ -18,6 +18,7 @@ export default function NuevoPedidoPage() {
     notas: "",
   });
 
+  // 📌 Si vienes desde el calendario
   useEffect(() => {
     if (fechaSeleccionada) {
       setForm(prev => ({
@@ -52,15 +53,9 @@ export default function NuevoPedidoPage() {
 
     if (res.success) {
       alert("✅ Pedido registrado");
-      setForm({
-        proveedorId: "",
-        fecha: new Date().toISOString().split("T")[0],
-        hora: "10:00",
-        montoEstimado: "",
-        fuentePago: "",
-        productos: "",
-        notas: "",
-      });
+      cambiarSeccion("pedidos");
+    } else {
+      alert("❌ Error al guardar pedido");
     }
   };
 
@@ -69,9 +64,12 @@ export default function NuevoPedidoPage() {
       <h2 className="section-title">➕ Nuevo Pedido</h2>
 
       <form onSubmit={handleSubmit}>
+
+        {/* PROVEEDOR */}
         <div className="form-group">
-          <label>Proveedor *</label>
+          <label className="form-label">Proveedor *</label>
           <select
+            className="form-select"
             name="proveedorId"
             value={form.proveedorId}
             onChange={handleChange}
@@ -85,7 +83,85 @@ export default function NuevoPedidoPage() {
           </select>
         </div>
 
-        <button type="submit">💾 Guardar Pedido</button>
+        {/* FECHA Y HORA */}
+        <div className="form-row">
+          <div className="form-group">
+            <label className="form-label">Fecha *</label>
+            <input
+              type="date"
+              className="form-input"
+              name="fecha"
+              value={form.fecha}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Hora</label>
+            <input
+              type="time"
+              className="form-input"
+              name="hora"
+              value={form.hora}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        {/* FUENTE DE PAGO */}
+        <div className="form-group">
+          <label className="form-label">Fuente de pago *</label>
+          <select
+            className="form-select"
+            name="fuentePago"
+            value={form.fuentePago}
+            onChange={handleChange}
+          >
+            <option value="">Seleccionar</option>
+            <option value="CEDIS">CEDIS</option>
+            <option value="CAJA1">Caja 1</option>
+            <option value="CAJA2">Caja 2</option>
+            <option value="credito">Crédito</option>
+          </select>
+        </div>
+
+        {/* MONTO */}
+        <div className="form-group">
+          <label className="form-label">Monto estimado *</label>
+          <input
+            type="number"
+            className="form-input"
+            name="montoEstimado"
+            value={form.montoEstimado}
+            onChange={handleChange}
+          />
+        </div>
+
+        {/* PRODUCTOS */}
+        <div className="form-group">
+          <label className="form-label">Productos</label>
+          <textarea
+            className="form-textarea"
+            name="productos"
+            value={form.productos}
+            onChange={handleChange}
+          />
+        </div>
+
+        {/* NOTAS */}
+        <div className="form-group">
+          <label className="form-label">Notas</label>
+          <textarea
+            className="form-textarea"
+            name="notas"
+            value={form.notas}
+            onChange={handleChange}
+          />
+        </div>
+
+        <button className="btn btn-primary btn-block" type="submit">
+          💾 Guardar Pedido
+        </button>
       </form>
     </div>
   );
