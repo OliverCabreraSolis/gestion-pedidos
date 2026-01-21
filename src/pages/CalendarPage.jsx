@@ -3,6 +3,8 @@ import CalendarHeader from '../components/calendar/CalendarHeader';
 import CalendarGrid from '../components/calendar/CalendarGrid';
 import DayExpanded from '../components/calendar/DayExpanded';
 import { usePedidos } from '../hooks/usePedidos';
+import{ useApp } from '../context/AppContext';
+import{ useNavigate } from "reacto-router-dom"; 
 
 export default function CalendarPage() {
   const { pedidos, actualizarPedido } = usePedidos();
@@ -29,7 +31,7 @@ export default function CalendarPage() {
     setAñoActual(nuevaFecha.getFullYear());
   };
 
-  
+  const navigate = useNavigate();
 
   const irAlMesActual = () => {
     setMesActual(hoy.getMonth());
@@ -62,8 +64,12 @@ export default function CalendarPage() {
           fechaStr={diaExpandido}
           pedidosDia={obtenerPedidosDia(diaExpandido)}
           onClose={() => setDiaExpandido(null)}
-          onCrearPedido={() => console.log('crear pedido')}
-          onCambiarEstado={cambiarEstadoPedido}
+          onCrearPedido={() => {
+             navigate("/nuevo-pedido", {
+             state: { fecha: diaExpandido }
+           });
+         }}
+  onCambiarEstado={cambiarEstadoPedido}
         />
       )}
     </div>
