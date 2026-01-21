@@ -1,17 +1,13 @@
 import { useState, useEffect } from "react";
 import { usePedidos } from "../hooks/usePedidos";
 import { useProveedores } from "../hooks/useProveedores";
-import { useApp } from '../context/AppContext';
-
+import { useApp } from "../context/AppContext";
 
 export default function NuevoPedidoPage() {
-
   const { fechaSeleccionada } = useApp();
-
   const { proveedores } = useProveedores();
   const { agregarPedido } = usePedidos();
-  
-  // ✅ EL useState VA AQUÍ, DENTRO DEL COMPONENTE
+
   const [form, setForm] = useState({
     proveedorId: "",
     fecha: new Date().toISOString().split("T")[0],
@@ -22,15 +18,14 @@ export default function NuevoPedidoPage() {
     notas: "",
   });
 
-  // ✅ cuando vienes desde el calendario
   useEffect(() => {
-  if (fechaSeleccionada) {
-    setForm(prev => ({
-      ...prev,
-      fecha: fechaSeleccionada
-    }));
-  }
-}, [fechaSeleccionada]);
+    if (fechaSeleccionada) {
+      setForm(prev => ({
+        ...prev,
+        fecha: fechaSeleccionada
+      }));
+    }
+  }, [fechaSeleccionada]);
 
   const handleChange = (e) => {
     setForm({
@@ -66,8 +61,6 @@ export default function NuevoPedidoPage() {
         productos: "",
         notas: "",
       });
-    } else {
-      alert("❌ Error al guardar pedido");
     }
   };
 
@@ -77,9 +70,8 @@ export default function NuevoPedidoPage() {
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label className="form-label">Proveedor *</label>
+          <label>Proveedor *</label>
           <select
-            className="form-select"
             name="proveedorId"
             value={form.proveedorId}
             onChange={handleChange}
@@ -93,10 +85,7 @@ export default function NuevoPedidoPage() {
           </select>
         </div>
 
-        {/* resto igual */}
-        <button className="btn btn-primary btn-block" type="submit">
-          💾 Guardar Pedido
-        </button>
+        <button type="submit">💾 Guardar Pedido</button>
       </form>
     </div>
   );
