@@ -4,7 +4,7 @@ import CalendarGrid from '../components/calendar/CalendarGrid';
 import DayExpanded from '../components/calendar/DayExpanded';
 import { usePedidos } from '../hooks/usePedidos';
 import{ useApp } from '../context/AppContext';
-import{ useNavigate } from "reacto-router-dom"; 
+import{ useNavigate } from "react-router-dom"; 
 
 export default function CalendarPage() {
   const { pedidos, actualizarPedido } = usePedidos();
@@ -69,7 +69,7 @@ export default function CalendarPage() {
              state: { fecha: diaExpandido }
            });
          }}
-  onCambiarEstado={cambiarEstadoPedido}
+        onCambiarEstado={cambiarEstadoPedido}
         />
       )}
     </div>
