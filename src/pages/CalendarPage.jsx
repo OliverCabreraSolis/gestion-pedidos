@@ -3,17 +3,18 @@ import CalendarHeader from '../components/calendar/CalendarHeader';
 import CalendarGrid from '../components/calendar/CalendarGrid';
 import DayExpanded from '../components/calendar/DayExpanded';
 import { usePedidos } from '../hooks/usePedidos';
-import { useNavigate } from "react-router-dom";
+import {useApp} from '../context/AppContext';
 
 export default function CalendarPage() {
+
+  const { setSeccionActual, setFechaSeleccionada } = useApp();
+
   const { pedidos, actualizarPedido } = usePedidos();
 
   const hoy = new Date();
   const [mesActual, setMesActual] = useState(hoy.getMonth());
   const [añoActual, setAñoActual] = useState(hoy.getFullYear());
   const [diaExpandido, setDiaExpandido] = useState(null);
-
-  const navigate = useNavigate();
 
   // 🔹 pedidos por día
   const obtenerPedidosDia = (fechaStr) => {
@@ -63,11 +64,10 @@ export default function CalendarPage() {
           fechaStr={diaExpandido}
           pedidosDia={obtenerPedidosDia(diaExpandido)}
           onClose={() => setDiaExpandido(null)}
-          onCrearPedido={() =>
-            navigate("/nuevo-pedido", {
-              state: { fecha: diaExpandido }
-            })
-          }
+          onCrearPedido={() => {
+            setFechaSeleccionada(diaExpandido);
+            setSeccionActual('nuevo-pedido');
+          }}
           onCambiarEstado={cambiarEstadoPedido}
         />
       )}

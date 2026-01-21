@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { usePedidos } from "../hooks/usePedidos";
-import { useLocation } from "react-router-dom";
 import { useProveedores } from "../hooks/useProveedores";
+import { useApp } from '../context/AppContext';
+
 
 export default function NuevoPedidoPage() {
 
+  const { fechaSeleccionada } = useApp();
+
   const { proveedores } = useProveedores();
   const { agregarPedido } = usePedidos();
-  const location = useLocation();
-
+  
   // ✅ EL useState VA AQUÍ, DENTRO DEL COMPONENTE
   const [form, setForm] = useState({
     proveedorId: "",
@@ -22,13 +24,13 @@ export default function NuevoPedidoPage() {
 
   // ✅ cuando vienes desde el calendario
   useEffect(() => {
-    if (location.state?.fecha) {
-      setForm(prev => ({
-        ...prev,
-        fecha: location.state.fecha
-      }));
-    }
-  }, [location.state]);
+  if (fechaSeleccionada) {
+    setForm(prev => ({
+      ...prev,
+      fecha: fechaSeleccionada
+    }));
+  }
+}, [fechaSeleccionada]);
 
   const handleChange = (e) => {
     setForm({
