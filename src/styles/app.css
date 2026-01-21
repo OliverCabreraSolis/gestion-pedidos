@@ -734,3 +734,50 @@ body {
     top: 0;
   }
 }
+
+/* ===== FIX FORM NUEVO PEDIDO ===== */
+
+.form-container {
+  max-width: 700px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  border: 2px solid #ffd400;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.form-textarea {
+  min-height: 70px;
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 15px;
+}
